@@ -4,20 +4,67 @@
 #include <iostream>
 #include "Tree.h"
 
+void demoDepthFirstSearch()
+{
+	BinaryTree skewedBT("root"); 
+	auto pRoot = skewedBT.getPRoot(); 
+
+	skewedBT.addNode("left", pRoot);
+	skewedBT.addNode("right", pRoot);
+
+	/*Now add a few more levels to the left ONLY (to illustrate "DEPTH" first search)*/
+	auto pLeft = skewedBT.find("left", pRoot);
+	skewedBT.addNode("left, left", pLeft); 
+
+	auto pLeftLeft = skewedBT.find("left, left", pRoot); 
+	skewedBT.addNode("left, left, left", pLeftLeft);
+
+	std::cout << "\n\n\nSearching now for \"right\"\n";
+	auto pRight = skewedBT.find("right", pRoot);
+
+	if (pRight != nullptr) std::cout << "\n\nRight was FOUND\n";
+	else std::cout << "\n\nRight was NOT found\n";
+
+}
+
+
 int main()
 {
-	BinaryTree bt("root");
+	//demoDepthFirstSearch(); 
 
-	bt.addNode("Left child data", bt.pRoot, true); 
-	bt.addNode("Right child data", bt.pRoot, false); 
+	//std::cout << "Any key to continue\n";
+	//std::cin.get(); 
 
+	try
+	{
 
-	//bt.pRoot->left->dataOfInterest = "left child of root";
-	//bt.pRoot->left->left = nullptr; 
+		BinaryTree bt("root");
 
-	//
-	//bt.pRoot->right->dataOfInterest = "RIGHT child of root";
+		bt.addNode("left", bt.getPRoot());
+		bt.addNode("right", bt.getPRoot());
 
+		//bt.addNode("THIRD child???", bt.getPRoot()); //throws!
+
+		auto pRoot = bt.getPRoot(); 
+
+		auto rootLoc = bt.find("root", pRoot); 
+		auto leftLoc = bt.find("left", pRoot); 
+		auto rightLoc = bt.find("right", pRoot);
+
+		auto rightRightLoc = bt.find("right, right", pRoot);
+		if (rightRightLoc == nullptr) std::cout << "right, right not found\n";
+
+	}
+
+	catch (const MyException& e)
+	{
+		std::cout << e.what() << "\n";
+	}
+
+	catch (const std::exception& e)
+	{
+		std::cout << e.what() << "\n";
+	}
 
 }
 
