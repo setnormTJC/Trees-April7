@@ -19,9 +19,9 @@ public:
 
 class BinaryTreeNode
 {
-	std::string dataOfInterest;
-	BinaryTreeNode* left; 
-	BinaryTreeNode* right; 
+	std::string contents;
+	BinaryTreeNode* pLeft; 
+	BinaryTreeNode* pRight; 
 
 	friend class BinaryTree;  //note the FRIEND keyword! (students haven't seen this in a while)
 

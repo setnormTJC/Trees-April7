@@ -18,7 +18,7 @@ std::string MyException::what() const
 
 
 BinaryTreeNode::BinaryTreeNode(const std::string& dataOfInterest, BinaryTreeNode* left, BinaryTreeNode* right)
-	:dataOfInterest(dataOfInterest), left(left), right(right)
+	:contents(dataOfInterest), pLeft(left), pRight(right)
 {
 }
 
@@ -41,14 +41,14 @@ void BinaryTree::addNode(const std::string& dataToAdd, BinaryTreeNode* pParent)
 		throw MyException("Cannot add to a parent that does not exist!", __FILE__, __LINE__);
 	}
 
-	if (pParent->left == nullptr)
+	if (pParent->pLeft == nullptr)
 	{
-		pParent->left = new BinaryTreeNode(dataToAdd, nullptr, nullptr); 
+		pParent->pLeft = new BinaryTreeNode(dataToAdd, nullptr, nullptr); 
 	}
 
-	else if (pParent-> right == nullptr)
+	else if (pParent-> pRight == nullptr)
 	{
-		pParent->right = new BinaryTreeNode(dataToAdd, nullptr, nullptr); 
+		pParent->pRight = new BinaryTreeNode(dataToAdd, nullptr, nullptr); 
 	}
 
 	else //both children nodes are already occupied 
@@ -61,26 +61,26 @@ void BinaryTree::addNode(const std::string& dataToAdd, BinaryTreeNode* pParent)
 BinaryTreeNode* BinaryTree::nonRecursiveFind(const std::string& dataToFind) const
 {
 	//start the search at the root: 
-	if (pRoot->dataOfInterest == dataToFind)
+	if (pRoot->contents == dataToFind)
 	{
 		return pRoot;
 	}
 	//look left
-	else if (pRoot->left->dataOfInterest == dataToFind)
+	else if (pRoot->pLeft->contents == dataToFind)
 	{
-		return pRoot->left; 
+		return pRoot->pLeft; 
 	}
 
 	/*look right*/
-	else if (pRoot->right->dataOfInterest == dataToFind)
+	else if (pRoot->pRight->contents == dataToFind)
 	{
-		return pRoot->right; 
+		return pRoot->pRight; 
 	}
 
 	/*...look left, left*/
-	else if (pRoot->left->left->dataOfInterest == dataToFind)
+	else if (pRoot->pLeft->pLeft->contents == dataToFind)
 	{
-		return pRoot->left->left;
+		return pRoot->pLeft->pLeft;
 	}
 
 	/*etc. add nauseum (COULD keep track of number of nodes examined and loop while(nodeCount < totalNodes))*/
@@ -97,20 +97,20 @@ BinaryTreeNode* BinaryTree::find(const std::string& dataToFind, BinaryTreeNode* 
 	if (pCurrent == nullptr) return nullptr; //do NOT attempt to get `dataOfInterest` on nullptr!
 
 	/*OPTIONAL print (For algo visualization)*/
-	std::cout << "Visiting node containing: " << pCurrent->dataOfInterest << "\n";
+	std::cout << "Visiting node containing: " << pCurrent->contents << "\n";
 	//base case:
-	if (pCurrent->dataOfInterest == dataToFind) return pCurrent;
+	if (pCurrent->contents == dataToFind) return pCurrent;
 
 	else
 	{
 		//recursively look left and right
-		auto pLeft = find(dataToFind, pCurrent->left);
+		auto pLeft = find(dataToFind, pCurrent->pLeft);
 		if (pLeft != nullptr) //if pLeft IS nullptr, then move on to the RIGHT child
 		{
 			return pLeft; 
 		}
 
-		auto pRight = find(dataToFind, pCurrent->right);
+		auto pRight = find(dataToFind, pCurrent->pRight);
 		if (pRight != nullptr)
 		{
 			return pRight; 
