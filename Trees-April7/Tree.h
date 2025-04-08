@@ -49,6 +49,9 @@ public:
 	BinaryTreeNode* nonRecursiveFind(const std::string& dataToFind) const;
 	/*a RECURSIVE function (more generally called "Depth-first search") @param pCurrent -> call with treeName.getPRoot()*/
 	BinaryTreeNode* find(const std::string& dataToFind, BinaryTreeNode* pCurrent) const; 
-	
+
+	/*BFS means BREADTH-first search (the recursive find is DEPTH-first search)*/
+	BinaryTreeNode* find_withBFS(const std::string& dataToFind) const;
+
 };
 

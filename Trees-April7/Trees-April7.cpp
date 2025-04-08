@@ -3,8 +3,33 @@
 
 #include <iostream>
 #include "Tree.h"
+#include <vector>
 
-void demoDepthFirstSearch()
+#include<filesystem>
+
+
+/*Intended to be a simple first "tree-planting" exercise*/
+void firstDemo()
+{
+	BinaryTree bt("root");
+
+	bt.addNode("left", bt.getPRoot());
+	bt.addNode("right", bt.getPRoot());
+
+	//bt.addNode("THIRD child???", bt.getPRoot()); //throws!
+
+	auto pRoot = bt.getPRoot();
+
+	auto rootLoc = bt.find("root", pRoot);
+	auto leftLoc = bt.find("left", pRoot);
+	auto rightLoc = bt.find("right", pRoot);
+
+	auto rightRightLoc = bt.find("right, right", pRoot);
+	if (rightRightLoc == nullptr) std::cout << "right, right not found\n";
+}
+
+/*Intending to convey the DEPTH in the "Depth-first search"*/
+void secondDemo()
 {
 	BinaryTree skewedBT("root"); 
 	auto pRoot = skewedBT.getPRoot(); 
@@ -30,29 +55,26 @@ void demoDepthFirstSearch()
 
 int main()
 {
-	//demoDepthFirstSearch(); 
-
-	//std::cout << "Any key to continue\n";
-	//std::cin.get(); 
 
 	try
 	{
-
-		BinaryTree bt("root");
-
-		bt.addNode("left", bt.getPRoot());
-		bt.addNode("right", bt.getPRoot());
-
-		//bt.addNode("THIRD child???", bt.getPRoot()); //throws!
-
+		BinaryTree bt("root"); //not to be confused with "Beached Thing" from Death Stranding
 		auto pRoot = bt.getPRoot(); 
 
-		auto rootLoc = bt.find("root", pRoot); 
-		auto leftLoc = bt.find("left", pRoot); 
-		auto rightLoc = bt.find("right", pRoot);
+		bt.addNode("left", pRoot);
+		bt.addNode("right", pRoot);
 
-		auto rightRightLoc = bt.find("right, right", pRoot);
-		if (rightRightLoc == nullptr) std::cout << "right, right not found\n";
+		auto pLeft = bt.find_withBFS("left");
+		//add two children to left node (note: BinaryTree::addNode will do safety check for pLeft != nullptr)
+		bt.addNode("left, left", pLeft);
+		bt.addNode("left, right", pLeft); 
+
+		//now add a (right) child to right: 
+		auto pRight = bt.find_withBFS("right"); 
+		bt.addNode("right, right", pRight);
+
+		/*attempt to find a node value that does not exist*/
+		auto pGibberish = bt.find_withBFS("adfsadfasdf");
 
 	}
 

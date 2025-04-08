@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include <iostream>
+#include <queue>
 
 MyException::MyException(const std::string message, const std::string& filename, const int lineNumber)
 	:message(message), filename(filename), lineNumber(lineNumber)
@@ -117,6 +118,35 @@ BinaryTreeNode* BinaryTree::find(const std::string& dataToFind, BinaryTreeNode* 
 
 		return nullptr; //only reached if data is not found 
 	}
+}
+
+BinaryTreeNode* BinaryTree::find_withBFS(const std::string& dataToFind) const
+{
+	//use a queue to hold all existing children nodes: 
+	std::queue<BinaryTreeNode*> nodeQueue; 
+	
+	//first, insert ROOT: 
+	nodeQueue.push(pRoot);
+
+	//loop while nodeQueue is not empty (it will ONLY become empty if we SCAN the entire tree and do NOT find target)
+	while (nodeQueue.empty() == false)
+	{
+		//get node at front: 
+		auto currentParent = nodeQueue.front(); 
+
+		//check if it contains the target value: 
+		if (currentParent->contents == dataToFind) return currentParent;
+
+		//remove the current front node (and move onto the next node in the next loop iteration): 
+		nodeQueue.pop(); 
+
+		//push left and right child into the queue (if they exist): 
+		if (currentParent->pLeft != nullptr) nodeQueue.push(currentParent->pLeft);
+		if (currentParent->pRight != nullptr) nodeQueue.push(currentParent->pRight);	
+	}
+
+	std::cout << dataToFind << " was NOT found in the tree.\n";
+	return nullptr; 
 }
 
 
