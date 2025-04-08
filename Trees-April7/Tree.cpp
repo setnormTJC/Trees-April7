@@ -85,7 +85,6 @@ BinaryTreeNode* BinaryTree::nonRecursiveFind(const std::string& dataToFind) cons
 
 	/*etc. add nauseum (COULD keep track of number of nodes examined and loop while(nodeCount < totalNodes))*/
 	
-	
 	else //not in the entire tree 
 	{
 		return nullptr; 

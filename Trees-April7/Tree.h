@@ -13,7 +13,6 @@ class MyException
 public: 
 	MyException() = delete; 
 	MyException(const std::string message, const std::string& filename, const int lineNumber);
-	//override std::exception's "what" method: 
 	std::string what() const; 
 };
 
