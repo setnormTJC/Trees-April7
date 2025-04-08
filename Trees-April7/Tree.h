@@ -23,6 +23,7 @@ class BinaryTreeNode
 	BinaryTreeNode* pRight; 
 
 	friend class BinaryTree;  //note the FRIEND keyword! (students haven't seen this in a while)
+	friend class BinarySearchTree; 
 
 public: 
 	BinaryTreeNode(const std::string& dataOfInterest, BinaryTreeNode* left, BinaryTreeNode* right);
@@ -43,7 +44,7 @@ public:
 	BinaryTreeNode* getPRoot() const;
 
 	/*preferentially adds to left - adds to the right if left is already occupied*/
-	void addNode(const std::string& dataToAdd, BinaryTreeNode* pParent);
+	virtual void addNode(const std::string& dataToAdd, BinaryTreeNode* pParent);
 
 	/*NOTE: this does NOT work - just intended to demo the usefulness of recursion*/
 	BinaryTreeNode* nonRecursiveFind(const std::string& dataToFind) const;
@@ -53,5 +54,14 @@ public:
 	/*BFS means BREADTH-first search (the recursive find is DEPTH-first search)*/
 	BinaryTreeNode* find_withBFS(const std::string& dataToFind) const;
 
+	/*A nice other example of recursion*/
+	int getHeight(); //does this need parameters? 
 };
 
+/*Overrides its parent's `addNode` function*/
+class BinarySearchTree : public BinaryTree
+{
+public: 
+	/*@param dataToAdd -> if LESS than parent node, insert to the LEFT, else insert to the RIGHT*/
+	void addNode(const std::string& dataToAdd, BinaryTreeNode* pParent) override; 
+};
