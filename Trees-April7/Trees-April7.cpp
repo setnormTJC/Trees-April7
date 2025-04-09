@@ -52,30 +52,33 @@ void secondDemo()
 
 }
 
+void thirdDemo()
+{
+	BinaryTree bt("root"); //not to be confused with "Beached Thing" from Death Stranding
+	auto pRoot = bt.getPRoot();
+
+	bt.addNode("left", pRoot);
+	bt.addNode("right", pRoot);
+
+	auto pLeft = bt.find_withBFS("left");
+	//add two children to left node (note: BinaryTree::addNode will do safety check for pLeft != nullptr)
+	bt.addNode("left, left", pLeft);
+	bt.addNode("left, right", pLeft);
+
+	//now add a (right) child to right: 
+	auto pRight = bt.find_withBFS("right");
+	bt.addNode("right, right", pRight);
+
+	/*ATTEMPT to find a node value that does not exist*/
+	auto pGibberish = bt.find_withBFS("adfsadfasdf");
+}
+
 
 int main()
 {
-
 	try
 	{
-		BinaryTree bt("root"); //not to be confused with "Beached Thing" from Death Stranding
-		auto pRoot = bt.getPRoot(); 
-
-		bt.addNode("left", pRoot);
-		bt.addNode("right", pRoot);
-
-		auto pLeft = bt.find_withBFS("left");
-		//add two children to left node (note: BinaryTree::addNode will do safety check for pLeft != nullptr)
-		bt.addNode("left, left", pLeft);
-		bt.addNode("left, right", pLeft); 
-
-		//now add a (right) child to right: 
-		auto pRight = bt.find_withBFS("right"); 
-		bt.addNode("right, right", pRight);
-
-		/*attempt to find a node value that does not exist*/
-		auto pGibberish = bt.find_withBFS("adfsadfasdf");
-
+		firstDemo(); 
 	}
 
 	catch (const MyException& e)
