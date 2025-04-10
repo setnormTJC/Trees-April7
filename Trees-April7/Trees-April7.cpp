@@ -24,6 +24,9 @@ void firstDemo()
 	auto leftLoc = bt.find("left", pRoot);
 	auto rightLoc = bt.find("right", pRoot);
 
+	bt.addNode("right, right", rightLoc);
+
+
 	auto rightRightLoc = bt.find("right, right", pRoot);
 	if (rightRightLoc == nullptr) std::cout << "right, right not found\n";
 }
@@ -67,7 +70,7 @@ void thirdDemo()
 
 	//now add a (right) child to right: 
 	auto pRight = bt.find_withBFS("right");
-	bt.addNode("right, right", pRight);
+	bt.addNode("right, left", pRight);
 
 	/*ATTEMPT to find a node value that does not exist*/
 	auto pGibberish = bt.find_withBFS("adfsadfasdf");
@@ -78,7 +81,8 @@ int main()
 {
 	try
 	{
-		firstDemo(); 
+		//secondDemo(); 
+		thirdDemo(); 
 	}
 
 	catch (const MyException& e)
