@@ -24,11 +24,11 @@ void firstDemo()
 	auto leftLoc = bt.find("left", pRoot);
 	auto rightLoc = bt.find("right", pRoot);
 
-	bt.addNode("right, right", rightLoc);
+	bt.addNode("right, left", rightLoc);
 
 
-	auto rightRightLoc = bt.find("right, right", pRoot);
-	if (rightRightLoc == nullptr) std::cout << "right, right not found\n";
+	auto rightRightLoc = bt.find("right, left", pRoot);
+	if (rightRightLoc == nullptr) std::cout << "right, left not found\n";
 }
 
 /*Intending to convey the DEPTH in the "Depth-first search"*/
@@ -46,6 +46,9 @@ void secondDemo()
 
 	auto pLeftLeft = skewedBT.find("left, left", pRoot); 
 	skewedBT.addNode("left, left, left", pLeftLeft);
+
+	std::cout << "Searching for \"right\"...\n";
+	std::cout << "The stuff that gets printed after this should make it clear why the term \"depth first \" is used:\n";
 
 	std::cout << "\n\n\nSearching now for \"right\"\n";
 	auto pRight = skewedBT.find("right", pRoot);
@@ -81,6 +84,7 @@ int main()
 {
 	try
 	{
+		//firstDemo(); 
 		//secondDemo(); 
 		thirdDemo(); 
 	}
