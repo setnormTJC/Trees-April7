@@ -79,37 +79,77 @@ void thirdDemo()
 	auto pGibberish = bt.find_withBFS("adfsadfasdf");
 }
 
+void demoPersona5SkillTree()
+{
+	N_AryTree jokerSkillTree("Joker's root");  //from P5 (from Atlus)
+
+	auto pJokerRoot = jokerSkillTree.getRoot();
+	//add persona "Arsène" (note the accented 'e')
+	jokerSkillTree.addNode(pJokerRoot, "Arsene persona");
+
+	auto pArsene = jokerSkillTree.bfs("Arsene persona"); //get Arsène's address so he can have "children" (AKA: skills)
+	//add skills to persona "Arsène":
+	jokerSkillTree.addNode(pArsene, "Cleave");
+	jokerSkillTree.addNode(pArsene, "Sukunda");
+	jokerSkillTree.addNode(pArsene, "Dream Needle");
+
+
+	//Now add persona "Alice": 
+	jokerSkillTree.addNode(pJokerRoot, "Alice");
+	auto pAlice = jokerSkillTree.bfs("Alice");
+
+	jokerSkillTree.addNode(pAlice, "Mamudoon");
+	jokerSkillTree.addNode(pAlice, "Dekunda");
+	jokerSkillTree.addNode(pAlice, "Die for me!");
+	jokerSkillTree.addNode(pAlice, "Megidolaon");
+	jokerSkillTree.addNode(pAlice, "Concentrate");
+
+	std::cout << "Ro?\n";
+
+}
 
 int main()
 {
 	try
 	{
-
-		N_AryTree jokerSkillTree("Joker's root");  //from P5 (from Atlus)
-
-		auto pJokerRoot = jokerSkillTree.getRoot(); 
-		//add persona "Arsène" (note the accented 'e')
-		jokerSkillTree.addNode(pJokerRoot, "Arsene persona"); 
-
-		auto pArsene = jokerSkillTree.bfs("Arsene persona"); //get Arsène's address so he can have "children" (AKA: skills)
-		//add skills to persona "Arsène":
-		jokerSkillTree.addNode(pArsene, "Cleave");
-		jokerSkillTree.addNode(pArsene, "Sukunda");
-		jokerSkillTree.addNode(pArsene, "Dream Needle");
+		N_AryTree videoGameTree("root of the tree");
 
 
-		//Now add persona "Alice": 
-		jokerSkillTree.addNode(pJokerRoot, "Alice");
-		auto pAlice = jokerSkillTree.bfs("Alice"); 
+		auto pRoot = videoGameTree.getRoot();
+
+		/*Level 1 of the tree is GENRES*/
+		videoGameTree.addNode(pRoot, "RPG");
+		videoGameTree.addNode(pRoot, "FPS");
+		videoGameTree.addNode(pRoot, "Sports");
+
+		/*Level 2 of the (n-ary) tree is examples in the genres given above*/
+
+		auto pRPG = videoGameTree.bfs("RPG");
+		videoGameTree.addNode(pRPG, "Final Fantasy X");
+
+		videoGameTree.addNode(pRPG, "Persona 5");
+
+		//let's add children to "FPS" genre
+		auto pFPS = videoGameTree.bfs("FPS");
+		videoGameTree.addNode(pFPS, "Call of Duty - the bro's game");
+		videoGameTree.addNode(pFPS, "Halo"); 
+
+		auto pSports = videoGameTree.bfs("Sports");
+		videoGameTree.addNode(pSports, "NBA 2K");
+		videoGameTree.addNode(pSports, "FIFA something or other");
+
+
+		//is the ROOT of this tree a LEAF? 
+		std::cout << std::boolalpha; 
+		std::cout << "Is Root a leaf?\n" << videoGameTree.isLeaf(pRoot) << "\n";
+
+		auto pNBA2K = videoGameTree.bfs("NBA 2K");
+		std::cout << "Is NBA 2K a leaf? " << videoGameTree.isLeaf(pNBA2K) << "\n";
+
+		//let's print all of the LEAF nodes (which are all game titles) 
+		std::cout << "\n\n";
+		videoGameTree.bfs("adsfasfasdfasdf"); //this is NOT in the tree -> this FORCES complete traversal 
 		
-		jokerSkillTree.addNode(pAlice, "Mamudoon");
-		jokerSkillTree.addNode(pAlice, "Dekunda");
-		jokerSkillTree.addNode(pAlice, "Die for me!");
-		jokerSkillTree.addNode(pAlice, "Megidolaon");
-		jokerSkillTree.addNode(pAlice, "Concentrate");
-
-		std::cout << "Ro?\n";
-
 	}
 
 	catch (const MyException& e)

@@ -167,13 +167,19 @@ N_AryTreeNode* N_AryTree::bfs(const std::string& valueToFind)
 
 	while (!q.empty())
 	{
-		auto front = q.front(); 
+		auto pFront = q.front(); 
 
-		if (front->contents == valueToFind)
-			return front; 
+		if (this->isLeaf(pFront))
+		{
+			std::cout << pFront->contents << "\n";
+		}
 
-		for (int i = 0; i < front->childrenLinks.size(); ++i)
-			q.push(front->childrenLinks.at(i));
+
+		if (pFront->contents == valueToFind)
+			return pFront; 
+
+		for (int i = 0; i < pFront->childrenLinks.size(); ++i)
+			q.push(pFront->childrenLinks.at(i));
 
 		q.pop(); 
 	}
@@ -190,5 +196,12 @@ void N_AryTree::addNode(N_AryTreeNode* pParent, const std::string& valueToAdd)
 	auto newNode = new N_AryTreeNode(valueToAdd, {}); //as in the constructor, {} means no children initially
 
 	pParent->childrenLinks.push_back(newNode);
+
+	//return newNode; //one possible approach
 	
+}
+
+bool N_AryTree::isLeaf(N_AryTreeNode* pNode)
+{
+	return (pNode->childrenLinks.size() == 0);
 }

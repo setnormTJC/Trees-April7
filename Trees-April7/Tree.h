@@ -95,6 +95,10 @@ public:
 
 	N_AryTreeNode* getRoot(); 
 
+	/*breadth-first search*/
 	N_AryTreeNode* bfs(const std::string& valueToFind);
+
 	void addNode(N_AryTreeNode* pParent, const std::string& valueToAdd);
+
+	bool isLeaf(N_AryTreeNode* pNode);
 };
