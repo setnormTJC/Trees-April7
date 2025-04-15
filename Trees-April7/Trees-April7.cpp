@@ -84,9 +84,32 @@ int main()
 {
 	try
 	{
-		//firstDemo(); 
-		//secondDemo(); 
-		thirdDemo(); 
+
+		N_AryTree jokerSkillTree("Joker's root");  //from P5 (from Atlus)
+
+		auto pJokerRoot = jokerSkillTree.getRoot(); 
+		//add persona "Arsène" (note the accented 'e')
+		jokerSkillTree.addNode(pJokerRoot, "Arsene persona"); 
+
+		auto pArsene = jokerSkillTree.bfs("Arsene persona"); //get Arsène's address so he can have "children" (AKA: skills)
+		//add skills to persona "Arsène":
+		jokerSkillTree.addNode(pArsene, "Cleave");
+		jokerSkillTree.addNode(pArsene, "Sukunda");
+		jokerSkillTree.addNode(pArsene, "Dream Needle");
+
+
+		//Now add persona "Alice": 
+		jokerSkillTree.addNode(pJokerRoot, "Alice");
+		auto pAlice = jokerSkillTree.bfs("Alice"); 
+		
+		jokerSkillTree.addNode(pAlice, "Mamudoon");
+		jokerSkillTree.addNode(pAlice, "Dekunda");
+		jokerSkillTree.addNode(pAlice, "Die for me!");
+		jokerSkillTree.addNode(pAlice, "Megidolaon");
+		jokerSkillTree.addNode(pAlice, "Concentrate");
+
+		std::cout << "Ro?\n";
+
 	}
 
 	catch (const MyException& e)

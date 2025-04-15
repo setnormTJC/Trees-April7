@@ -3,6 +3,7 @@
 #include<exception>
 #include<sstream>
 #include <string>
+#include <vector>
 
 
 class MyException
@@ -64,4 +65,36 @@ class BinarySearchTree : public BinaryTree
 public: 
 	/*@param dataToAdd -> if LESS than parent node, insert to the LEFT, else insert to the RIGHT*/
 	void addNode(const std::string& dataToAdd, BinaryTreeNode* pParent) override; 
+};
+
+
+class N_AryTreeNode
+{
+	std::string contents; 
+	std::vector<N_AryTreeNode*> childrenLinks; 
+
+	friend class N_AryTree;
+
+public: 
+	N_AryTreeNode(const std::string& contents, const std::vector<N_AryTreeNode*>& childrenLinks)
+		:contents(contents), childrenLinks(childrenLinks)
+	{
+
+	}
+};
+
+class N_AryTree
+{
+	
+	N_AryTreeNode* pRoot; 
+
+public: 
+	N_AryTree() = delete; 
+	N_AryTree(const std::string& valueInRoot); 
+
+
+	N_AryTreeNode* getRoot(); 
+
+	N_AryTreeNode* bfs(const std::string& valueToFind);
+	void addNode(N_AryTreeNode* pParent, const std::string& valueToAdd);
 };

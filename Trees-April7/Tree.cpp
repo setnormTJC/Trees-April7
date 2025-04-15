@@ -149,4 +149,46 @@ BinaryTreeNode* BinaryTree::find_withBFS(const std::string& dataToFind) const
 	return nullptr; 
 }
 
+N_AryTree::N_AryTree(const std::string& valueInRoot)
+{
+	pRoot = new N_AryTreeNode(valueInRoot, {});//using empty vector to indicate ZERO children initially
+}
 
+N_AryTreeNode* N_AryTree::getRoot()
+{
+	return pRoot; 
+}
+
+N_AryTreeNode* N_AryTree::bfs(const std::string& valueToFind)
+{
+	std::queue<N_AryTreeNode*> q; 
+
+	q.push(pRoot); 
+
+	while (!q.empty())
+	{
+		auto front = q.front(); 
+
+		if (front->contents == valueToFind)
+			return front; 
+
+		for (int i = 0; i < front->childrenLinks.size(); ++i)
+			q.push(front->childrenLinks.at(i));
+
+		q.pop(); 
+	}
+
+	std::cout << valueToFind << " not found in tree!\n";
+	return nullptr; 
+}
+
+void N_AryTree::addNode(N_AryTreeNode* pParent, const std::string& valueToAdd)
+{
+	if (pParent == nullptr)
+		throw MyException("Cannot add to a parent that does not exist!\n", __FILE__, __LINE__);
+
+	auto newNode = new N_AryTreeNode(valueToAdd, {}); //as in the constructor, {} means no children initially
+
+	pParent->childrenLinks.push_back(newNode);
+	
+}
