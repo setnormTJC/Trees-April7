@@ -108,47 +108,91 @@ void demoPersona5SkillTree()
 
 }
 
+/*This is an n-ary tree*/
+void demoVideoGameGenreTree()
+{
+	N_AryTree videoGameTree("root of the tree");
+
+
+	auto pRoot = videoGameTree.getRoot();
+
+	/*Level 1 of the tree is GENRES*/
+	videoGameTree.addNode(pRoot, "RPG");
+	videoGameTree.addNode(pRoot, "FPS");
+	videoGameTree.addNode(pRoot, "Sports");
+
+	/*Level 2 of the (n-ary) tree is examples in the genres given above*/
+
+	auto pRPG = videoGameTree.bfs("RPG");
+	videoGameTree.addNode(pRPG, "Final Fantasy X");
+
+	videoGameTree.addNode(pRPG, "Persona 5");
+
+	//let's add children to "FPS" genre
+	auto pFPS = videoGameTree.bfs("FPS");
+	videoGameTree.addNode(pFPS, "Call of Duty - the bro's game");
+	videoGameTree.addNode(pFPS, "Halo");
+
+	auto pSports = videoGameTree.bfs("Sports");
+	videoGameTree.addNode(pSports, "NBA 2K");
+	videoGameTree.addNode(pSports, "FIFA something or other");
+
+
+	//is the ROOT of this tree a LEAF? 
+	std::cout << std::boolalpha;
+	std::cout << "Is Root a leaf?\n" << videoGameTree.isLeaf(pRoot) << "\n";
+
+	auto pNBA2K = videoGameTree.bfs("NBA 2K");
+	std::cout << "Is NBA 2K a leaf? " << videoGameTree.isLeaf(pNBA2K) << "\n";
+
+	//let's print all of the LEAF nodes (which are all game titles) 
+	std::cout << "\n\n";
+	videoGameTree.bfs("adsfasfasdfasdf"); //this is NOT in the tree -> this FORCES complete traversal 
+}
+
+/*as in : https://finalfantasy.fandom.com/wiki/Final_Fantasy_VII_battle_system?file=Yuffie_Encounter.jpg*/
+void demoFF7ActionTree()
+{
+	N_AryTree partyTree("party root");
+
+	auto pRoot = partyTree.getRoot(); 
+
+	partyTree.addNode(pRoot, "Cloud");
+	partyTree.addNode(pRoot, "Tifa");
+	partyTree.addNode(pRoot, "Red XIII");
+
+	//auto pCloud = partyTree.bfs("cloud"); //NULLPTR! (-1 if this were an array)
+	auto pCloud = partyTree.bfs("Cloud");
+
+	partyTree.addNode(pCloud, "Items"); 
+	partyTree.addNode(pCloud, "Magic");
+
+	//add item and magic to Tifa and Red XIII: 
+	N_AryTreeNode* pTifa = partyTree.bfs("Tifa");
+	partyTree.addNode(pTifa, "Items");
+	//NOTE! Items are SHARED among characters, so this would be better implemented with 
+	//a GRAPH data structure! 
+	partyTree.addNode(pTifa, "Magic");
+
+	auto pRed = partyTree.bfs("Red XIII");
+	partyTree.addNode(pRed, "Items");
+	partyTree.addNode(pRed, "Magic");
+
+	std::cout << "Is Magicka a LEAF node? \n"; 
+	std::cout << std::boolalpha; 
+	auto pMagic = partyTree.bfs("Magic");
+	std::cout << partyTree.isLeaf(pMagic) << "\n";
+
+	std::cout << "What about the ROOT node? " << partyTree.isLeaf(pRoot) << "\n";
+
+}
+
+
 int main()
 {
 	try
 	{
-		N_AryTree videoGameTree("root of the tree");
-
-
-		auto pRoot = videoGameTree.getRoot();
-
-		/*Level 1 of the tree is GENRES*/
-		videoGameTree.addNode(pRoot, "RPG");
-		videoGameTree.addNode(pRoot, "FPS");
-		videoGameTree.addNode(pRoot, "Sports");
-
-		/*Level 2 of the (n-ary) tree is examples in the genres given above*/
-
-		auto pRPG = videoGameTree.bfs("RPG");
-		videoGameTree.addNode(pRPG, "Final Fantasy X");
-
-		videoGameTree.addNode(pRPG, "Persona 5");
-
-		//let's add children to "FPS" genre
-		auto pFPS = videoGameTree.bfs("FPS");
-		videoGameTree.addNode(pFPS, "Call of Duty - the bro's game");
-		videoGameTree.addNode(pFPS, "Halo"); 
-
-		auto pSports = videoGameTree.bfs("Sports");
-		videoGameTree.addNode(pSports, "NBA 2K");
-		videoGameTree.addNode(pSports, "FIFA something or other");
-
-
-		//is the ROOT of this tree a LEAF? 
-		std::cout << std::boolalpha; 
-		std::cout << "Is Root a leaf?\n" << videoGameTree.isLeaf(pRoot) << "\n";
-
-		auto pNBA2K = videoGameTree.bfs("NBA 2K");
-		std::cout << "Is NBA 2K a leaf? " << videoGameTree.isLeaf(pNBA2K) << "\n";
-
-		//let's print all of the LEAF nodes (which are all game titles) 
-		std::cout << "\n\n";
-		videoGameTree.bfs("adsfasfasdfasdf"); //this is NOT in the tree -> this FORCES complete traversal 
+		demoFF7ActionTree(); 
 		
 	}
 

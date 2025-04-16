@@ -169,10 +169,10 @@ N_AryTreeNode* N_AryTree::bfs(const std::string& valueToFind)
 	{
 		auto pFront = q.front(); 
 
-		if (this->isLeaf(pFront))
-		{
-			std::cout << pFront->contents << "\n";
-		}
+		//if (this->isLeaf(pFront))
+		//{
+		//	std::cout << pFront->contents << "\n";
+		//}
 
 
 		if (pFront->contents == valueToFind)
