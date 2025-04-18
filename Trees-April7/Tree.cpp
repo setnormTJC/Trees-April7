@@ -132,17 +132,19 @@ BinaryTreeNode* BinaryTree::find_withBFS(const std::string& dataToFind) const
 	while (nodeQueue.empty() == false)
 	{
 		//get node at front: 
-		auto currentParent = nodeQueue.front(); 
+		auto pCurrentParent = nodeQueue.front(); 
+
+		std::cout << "Visiting our dear friend: " << pCurrentParent->contents << "\n";
 
 		//check if it contains the target value: 
-		if (currentParent->contents == dataToFind) return currentParent;
+		if (pCurrentParent->contents == dataToFind) return pCurrentParent;
 
 		//remove the current front node (and move onto the next node in the next loop iteration): 
 		nodeQueue.pop(); 
 
 		//push left and right child into the queue (if they exist): 
-		if (currentParent->pLeft != nullptr) nodeQueue.push(currentParent->pLeft);
-		if (currentParent->pRight != nullptr) nodeQueue.push(currentParent->pRight);	
+		if (pCurrentParent->pLeft != nullptr) nodeQueue.push(pCurrentParent->pLeft);
+		if (pCurrentParent->pRight != nullptr) nodeQueue.push(pCurrentParent->pRight);	
 	}
 
 	std::cout << dataToFind << " was NOT found in the tree.\n";
@@ -169,10 +171,12 @@ N_AryTreeNode* N_AryTree::bfs(const std::string& valueToFind)
 	{
 		auto pFront = q.front(); 
 
-		//if (this->isLeaf(pFront))
-		//{
-		//	std::cout << pFront->contents << "\n";
-		//}
+		//std::cout << "Visiting the node containing\n";
+		// 
+		if (this->isLeaf(pFront))
+		{
+			std::cout << pFront->contents << "\n";
+		}
 
 
 		if (pFront->contents == valueToFind)
@@ -204,4 +208,32 @@ void N_AryTree::addNode(N_AryTreeNode* pParent, const std::string& valueToAdd)
 bool N_AryTree::isLeaf(N_AryTreeNode* pNode)
 {
 	return (pNode->childrenLinks.size() == 0);
+}
+
+BinaryTreeNode* BinarySearchTree::addBSTNode(const std::string& dataToAdd, BinaryTreeNode* pParent)
+{
+	if (pParent == nullptr)
+	{
+		pParent = new BinaryTreeNode(dataToAdd, nullptr, nullptr);
+	}
+
+	else
+	{
+		if (dataToAdd < pParent->contents)
+		{
+			pParent->pLeft = addBSTNode(dataToAdd, pParent->pLeft);
+		}
+
+		else if (dataToAdd > pParent->contents)
+		{
+			pParent->pRight = addBSTNode(dataToAdd, pParent->pRight);
+		}
+
+		else //data to add is ALREADY in the tree
+		{
+			std::cout << "No duplicates allowed!\n";
+			return nullptr; 
+		}
+	}
+
 }

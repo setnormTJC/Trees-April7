@@ -32,7 +32,7 @@ public:
 
 class BinaryTree
 {
-private: 
+protected: //protected gives access to CHILLUNS
 	/*Member variable************************/
 	BinaryTreeNode* pRoot;
 	//int numberOfNodesInTree; //this COULD prove worth the space it occupies if insisting on non-recursive traversal 
@@ -45,7 +45,7 @@ public:
 	BinaryTreeNode* getPRoot() const;
 
 	/*preferentially adds to left - adds to the right if left is already occupied*/
-	virtual void addNode(const std::string& dataToAdd, BinaryTreeNode* pParent);
+	void addNode(const std::string& dataToAdd, BinaryTreeNode* pParent);
 
 	/*NOTE: this does NOT work - just intended to demo the usefulness of recursion*/
 	BinaryTreeNode* nonRecursiveFind(const std::string& dataToFind) const;
@@ -63,8 +63,17 @@ public:
 class BinarySearchTree : public BinaryTree
 {
 public: 
-	/*@param dataToAdd -> if LESS than parent node, insert to the LEFT, else insert to the RIGHT*/
-	void addNode(const std::string& dataToAdd, BinaryTreeNode* pParent) override; 
+
+	BinarySearchTree(const std::string dataInTheRootNode)
+		:BinaryTree(dataInTheRootNode)
+	{
+
+	}
+
+	/*
+	* NOTE: this function ASSUMES no duplicate node value is inserted!
+	@param dataToAdd -> if LESS than parent node, insert to the LEFT, else insert to the RIGHT*/
+	BinaryTreeNode* addBSTNode(const std::string& dataToAdd, BinaryTreeNode* pParent);
 };
 
 

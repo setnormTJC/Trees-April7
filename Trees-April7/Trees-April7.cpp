@@ -104,7 +104,12 @@ void demoPersona5SkillTree()
 	jokerSkillTree.addNode(pAlice, "Megidolaon");
 	jokerSkillTree.addNode(pAlice, "Concentrate");
 
-	std::cout << "Ro?\n";
+	std::cout << "\n\n\n\Beginning the search for gibberish text -  below, we should ONLY see SKILLS\n";
+
+
+	std::string thingToSearchTreeFor = "asdfasdfasd";
+
+	jokerSkillTree.bfs(thingToSearchTreeFor);
 
 }
 
@@ -192,7 +197,26 @@ int main()
 {
 	try
 	{
-		demoFF7ActionTree(); 
+		BinarySearchTree bst("Darth"); 
+
+		std::vector<std::string> namesToInsertIntoBST =
+		{
+			"Alice", "Bob", "Carol", "Frank", "Eve", "Aaaah!"
+		};
+
+		auto pRoot = bst.getPRoot(); 
+
+		for (const std::string& currentName : namesToInsertIntoBST)
+			bst.addBSTNode(currentName, pRoot);
+
+		std::string gibberishSearchValue = "124sdvjksdldkd";
+
+		
+		std::cout << "BREADTH-first search yields: \n";
+		bst.find_withBFS(gibberishSearchValue);
+
+		std::cout << "DEPTH-first search yields: \n";
+		bst.find(gibberishSearchValue, pRoot); 
 		
 	}
 
