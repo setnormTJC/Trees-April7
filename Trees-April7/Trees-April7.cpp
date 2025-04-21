@@ -20,8 +20,8 @@ void firstDemo()
 
 	auto pRoot = bt.getPRoot();
 
-	auto rootLoc = bt.find("root", pRoot);
-	auto leftLoc = bt.find("left", pRoot);
+	//auto rootLoc = bt.find("root", pRoot);
+	//auto leftLoc = bt.find("left", pRoot);
 	auto rightLoc = bt.find("right", pRoot);
 
 	bt.addNode("right, left", rightLoc);
@@ -77,6 +77,11 @@ void thirdDemo()
 
 	/*ATTEMPT to find a node value that does not exist*/
 	auto pGibberish = bt.find_withBFS("adfsadfasdf");
+
+	if (pGibberish != nullptr)
+	{
+		std::cout << "Found the gibberish\n";
+	}
 }
 
 void demoPersona5SkillTree()
@@ -104,8 +109,9 @@ void demoPersona5SkillTree()
 	jokerSkillTree.addNode(pAlice, "Megidolaon");
 	jokerSkillTree.addNode(pAlice, "Concentrate");
 
-	std::cout << "\n\n\n\Beginning the search for gibberish text -  below, we should ONLY see SKILLS\n";
-
+	std::cout << "\n\n\n"
+		<<"Beginning the search for gibberish text -  below, we should ONLY see SKILLS\n";
+	
 
 	std::string thingToSearchTreeFor = "asdfasdfasd";
 
@@ -192,7 +198,7 @@ void demoFF7ActionTree()
 
 }
 
-
+ 
 int main()
 {
 	try
@@ -201,13 +207,13 @@ int main()
 
 		std::vector<std::string> namesToInsertIntoBST =
 		{
-			"Alice", "Bob", "Carol", "Frank", "Eve", "Aaaah!"
+			"Alice", "Bob", "Carol", "Frank", "Eve", "Aaaah!", "Alice" //NOTE the second "Alice"
 		};
 
 		auto pRoot = bst.getPRoot(); 
 
 		for (const std::string& currentName : namesToInsertIntoBST)
-			bst.addBSTNode(currentName, pRoot);
+			bst.addBSTNode(currentName, pRoot); //NOTE: the return value of this fn is ignored (it will always be pRoot)
 
 		std::string gibberishSearchValue = "124sdvjksdldkd";
 

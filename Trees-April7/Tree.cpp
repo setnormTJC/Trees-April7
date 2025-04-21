@@ -182,7 +182,7 @@ N_AryTreeNode* N_AryTree::bfs(const std::string& valueToFind)
 		if (pFront->contents == valueToFind)
 			return pFront; 
 
-		for (int i = 0; i < pFront->childrenLinks.size(); ++i)
+		for (size_t i = 0; i < pFront->childrenLinks.size(); ++i)
 			q.push(pFront->childrenLinks.at(i));
 
 		q.pop(); 
@@ -210,30 +210,36 @@ bool N_AryTree::isLeaf(N_AryTreeNode* pNode)
 	return (pNode->childrenLinks.size() == 0);
 }
 
+BinarySearchTree::BinarySearchTree(const std::string dataInTheRootNode)
+	:BinaryTree(dataInTheRootNode)
+{
+
+}
+
 BinaryTreeNode* BinarySearchTree::addBSTNode(const std::string& dataToAdd, BinaryTreeNode* pParent)
 {
-	if (pParent == nullptr)
+	if (pParent == nullptr) //base case
 	{
 		pParent = new BinaryTreeNode(dataToAdd, nullptr, nullptr);
+		return pParent;
 	}
 
 	else
 	{
 		if (dataToAdd < pParent->contents)
-		{
 			pParent->pLeft = addBSTNode(dataToAdd, pParent->pLeft);
-		}
 
 		else if (dataToAdd > pParent->contents)
-		{
 			pParent->pRight = addBSTNode(dataToAdd, pParent->pRight);
-		}
-
-		else //data to add is ALREADY in the tree
-		{
-			std::cout << "No duplicates allowed!\n";
-			return nullptr; 
-		}
+		//do NOTHING if dataToAdd == pParent-contents
+		return pParent;
 	}
+
+}
+
+N_AryTreeNode::N_AryTreeNode(const std::string& contents, const std::vector<N_AryTreeNode*>& childrenLinks)
+
+	:contents(contents), childrenLinks(childrenLinks)
+{
 
 }

@@ -5,17 +5,20 @@
 #include <string>
 #include <vector>
 
+#pragma warning (push)
+#pragma warning (disable: 4820)
 
 class MyException
 {
 	std::string message;
-	std::string filename; 
-	int lineNumber; 
+	std::string filename;
+	int lineNumber;
 public: 
 	MyException() = delete; 
 	MyException(const std::string message, const std::string& filename, const int lineNumber);
 	std::string what() const; 
 };
+#pragma warning(pop)  
 
 class BinaryTreeNode
 {
@@ -56,7 +59,7 @@ public:
 	BinaryTreeNode* find_withBFS(const std::string& dataToFind) const;
 
 	/*A nice other example of recursion*/
-	int getHeight(); //does this need parameters? 
+	//int getHeight(); //does this need parameters? 
 };
 
 /*Overrides its parent's `addNode` function*/
@@ -64,11 +67,7 @@ class BinarySearchTree : public BinaryTree
 {
 public: 
 
-	BinarySearchTree(const std::string dataInTheRootNode)
-		:BinaryTree(dataInTheRootNode)
-	{
-
-	}
+	BinarySearchTree(const std::string dataInTheRootNode);
 
 	/*
 	* NOTE: this function ASSUMES no duplicate node value is inserted!
@@ -85,11 +84,7 @@ class N_AryTreeNode
 	friend class N_AryTree;
 
 public: 
-	N_AryTreeNode(const std::string& contents, const std::vector<N_AryTreeNode*>& childrenLinks)
-		:contents(contents), childrenLinks(childrenLinks)
-	{
-
-	}
+	N_AryTreeNode(const std::string& contents, const std::vector<N_AryTreeNode*>& childrenLinks);
 };
 
 class N_AryTree
