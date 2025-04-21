@@ -151,6 +151,23 @@ BinaryTreeNode* BinaryTree::find_withBFS(const std::string& dataToFind) const
 	return nullptr; 
 }
 
+void BinaryTree::printNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int& currentDepth)
+{
+	if (pCurrent == nullptr)
+		return; //avoid dereferencing nullptr
+
+	if (pCurrent->contents == dataToFind) //base case
+		std::cout << "Found " << dataToFind << " at depth = " << currentDepth << "\n";
+	
+	else //look left and right
+	{
+		currentDepth = currentDepth + 1; 
+		printNodeDepth(dataToFind, pCurrent->pLeft, currentDepth);
+		currentDepth = currentDepth - 1; 
+		printNodeDepth(dataToFind, pCurrent->pRight, currentDepth);
+	}
+}
+
 N_AryTree::N_AryTree(const std::string& valueInRoot)
 {
 	pRoot = new N_AryTreeNode(valueInRoot, {});//using empty vector to indicate ZERO children initially
@@ -234,7 +251,6 @@ BinaryTreeNode* BinarySearchTree::addBSTNode(const std::string& dataToAdd, Binar
 		//do NOTHING if dataToAdd == pParent-contents
 		return pParent;
 	}
-
 }
 
 N_AryTreeNode::N_AryTreeNode(const std::string& contents, const std::vector<N_AryTreeNode*>& childrenLinks)

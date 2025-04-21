@@ -198,31 +198,57 @@ void demoFF7ActionTree()
 
 }
 
- 
+void demoBinarySearchTree()
+{
+	BinarySearchTree bst("Darth");
+
+	std::vector<std::string> namesToInsertIntoBST =
+	{
+		"Alice", "Bob", "Carol", "Frank", "Eve", "Aaaah!", "Alice" //NOTE the second "Alice"
+	};
+
+	auto pRoot = bst.getPRoot();
+
+	for (const std::string& currentName : namesToInsertIntoBST)
+		bst.addBSTNode(currentName, pRoot); //NOTE: the return value of this fn is ignored (it will always be pRoot)
+
+	std::string gibberishSearchValue = "124sdvjksdldkd";
+
+	std::cout << "BREADTH-first search yields: \n";
+	bst.find_withBFS(gibberishSearchValue);
+
+	std::cout << "\n\nDEPTH-first search yields: \n";
+	bst.find(gibberishSearchValue, pRoot);
+}
+
+void demoPrintNodeDepth()
+{
+	BinarySearchTree bst("Darth");
+
+	std::vector<std::string> namesToInsertIntoBST =
+	{
+		"Alice", "Bob", "Carol", "Frank", "Eve", "Aaaah!", "Alice" //NOTE the second "Alice"
+	};
+
+	auto pRoot = bst.getPRoot();
+
+	for (const std::string& currentName : namesToInsertIntoBST)
+		bst.addBSTNode(currentName, pRoot); //NOTE: the return value of this fn is ignored (it will always be pRoot)
+
+	int startingDepth = 0; 
+	//bst.printNodeDepth("Darth", pRoot, startingDepth);
+
+	//bst.printNodeDepth("Alice", pRoot, startingDepth); //should have depth = 1
+
+	bst.printNodeDepth("Frank", pRoot, startingDepth); //should also have depth = 1
+
+}
+
 int main()
 {
 	try
 	{
-		BinarySearchTree bst("Darth"); 
-
-		std::vector<std::string> namesToInsertIntoBST =
-		{
-			"Alice", "Bob", "Carol", "Frank", "Eve", "Aaaah!", "Alice" //NOTE the second "Alice"
-		};
-
-		auto pRoot = bst.getPRoot(); 
-
-		for (const std::string& currentName : namesToInsertIntoBST)
-			bst.addBSTNode(currentName, pRoot); //NOTE: the return value of this fn is ignored (it will always be pRoot)
-
-		std::string gibberishSearchValue = "124sdvjksdldkd";
-
-		
-		std::cout << "BREADTH-first search yields: \n";
-		bst.find_withBFS(gibberishSearchValue);
-
-		std::cout << "DEPTH-first search yields: \n";
-		bst.find(gibberishSearchValue, pRoot); 
+		demoPrintNodeDepth(); 
 		
 	}
 

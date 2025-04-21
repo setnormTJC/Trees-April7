@@ -58,8 +58,11 @@ public:
 	/*BFS means BREADTH-first search (the recursive find is DEPTH-first search)*/
 	BinaryTreeNode* find_withBFS(const std::string& dataToFind) const;
 
-	/*A nice other example of recursion*/
-	//int getHeight(); //does this need parameters? 
+	/*A nice other example of recursion
+	* @param currentDepth - NOTE the pass by non-const reference = this gets incremented on recursive calls 
+	- anticipate client calling with initial value = 0 (the root's depth)
+	*/
+	void printNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int& currentDepth); 
 };
 
 /*Overrides its parent's `addNode` function*/
