@@ -151,22 +151,84 @@ BinaryTreeNode* BinaryTree::find_withBFS(const std::string& dataToFind) const
 	return nullptr; 
 }
 
-void BinaryTree::printNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int& currentDepth)
+void BinaryTree::printNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int currentDepth)
 {
 	if (pCurrent == nullptr)
 		return; //avoid dereferencing nullptr
 
 	if (pCurrent->contents == dataToFind) //base case
+	{
 		std::cout << "Found " << dataToFind << " at depth = " << currentDepth << "\n";
-	
+		return; //don't waste time looking further ... 
+	}
+
 	else //look left and right
 	{
-		currentDepth = currentDepth + 1; 
-		printNodeDepth(dataToFind, pCurrent->pLeft, currentDepth);
-		currentDepth = currentDepth - 1; 
-		printNodeDepth(dataToFind, pCurrent->pRight, currentDepth);
+		printNodeDepth(dataToFind, pCurrent->pLeft, currentDepth + 1);
+		printNodeDepth(dataToFind, pCurrent->pRight, currentDepth + 1);
 	}
 }
+
+int BinaryTree::getNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int currentDepth)
+{
+	if (pCurrent == nullptr)
+		return -1;  //indicates the nullptr was hit and target not found down this path
+
+	if (pCurrent->contents == dataToFind) //base case
+	{
+		//std::cout << "Found " << dataToFind << " at depth = " << currentDepth << "\n";
+		return currentDepth;
+	}
+
+	else
+	{
+		int leftDepth = getNodeDepth(dataToFind, pCurrent->pLeft, currentDepth + 1);
+		int rightDepth = getNodeDepth(dataToFind, pCurrent->pRight, currentDepth + 1);
+
+		if (leftDepth == -1)
+			return rightDepth; //NOTE: rightDepth might also be -1
+
+		else
+			return leftDepth; //leftDepth != -1 indicates value WAS found on the left path
+	}
+}
+
+int BinaryTree::getTreeHeight()
+{
+	std::queue < std::pair<BinaryTreeNode*, int> > q; //this is a bit "slick"
+	//we keep track of each node's DEPTH with this queue (as a pair consisiting of a pointer and an integer)
+
+	int rootDepth = 0; 
+	q.emplace(pRoot, rootDepth); //q.push({pRoot, depth}) can also be used (note the need for braces there)
+
+	int maxDepth = rootDepth; 
+
+	while (!q.empty())
+	{
+		//get the pair {pNode, depth} at front: 
+		auto front = q.front(); 
+
+		auto pParent = front.first;
+		auto depth = front.second; 
+
+		if (depth > maxDepth) //check if we've reached a new maxDepth
+			maxDepth = depth; 
+
+		//if they exist, push left and right children into the queue with depth = depth + 1
+
+		if (pParent->pLeft) //alternatively: if (pParent->pLeft != nullptr)
+			q.emplace(pParent->pLeft, depth + 1);
+		
+		if (pParent->pRight)
+			q.emplace(pParent->pRight, depth + 1); 
+
+		//remove the current front node (and move onto the next node in the next loop iteration): 
+		q.pop();
+
+	}
+	return maxDepth; 
+}
+
 
 N_AryTree::N_AryTree(const std::string& valueInRoot)
 {
@@ -251,6 +313,33 @@ BinaryTreeNode* BinarySearchTree::addBSTNode(const std::string& dataToAdd, Binar
 		//do NOTHING if dataToAdd == pParent-contents
 		return pParent;
 	}
+}
+
+int BinarySearchTree::searchBST(const std::string& dataToFind)
+{
+	//start the search at the root: 
+	auto pCurrent = pRoot; 
+	bool found = false; 
+	int comparisonCount = 0; 
+
+	while (!found && pCurrent) //second condition longer form: pCurrent != nullptr
+	{
+		if (pCurrent->contents == dataToFind)
+		{
+			//std::cout << dataToFind << " was found\n";
+			found = true;
+		}
+
+		else if (dataToFind > pCurrent->contents)//look down the right branch 
+			pCurrent = pCurrent->pRight;
+
+		else //value is less than current node's value, so look left
+			pCurrent = pCurrent->pLeft;
+		
+		comparisonCount++; 
+	}
+	
+	return comparisonCount; 
 }
 
 N_AryTreeNode::N_AryTreeNode(const std::string& contents, const std::vector<N_AryTreeNode*>& childrenLinks)

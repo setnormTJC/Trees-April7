@@ -221,7 +221,7 @@ void demoBinarySearchTree()
 	bst.find(gibberishSearchValue, pRoot);
 }
 
-void demoPrintNodeDepth()
+void demoNodeDepth_andTreeHeight()
 {
 	BinarySearchTree bst("Darth");
 
@@ -240,16 +240,42 @@ void demoPrintNodeDepth()
 
 	//bst.printNodeDepth("Alice", pRoot, startingDepth); //should have depth = 1
 
-	bst.printNodeDepth("Frank", pRoot, startingDepth); //should also have depth = 1
+	//bst.printNodeDepth("Frank", pRoot, startingDepth); //should also have depth = 1
 
+	std::string valueToSearchFor = "Darth";
+	int depth = bst.getNodeDepth(valueToSearchFor, pRoot, startingDepth); 
+
+	std::cout << "Depth of " << valueToSearchFor << ": " << depth << "\n";
+
+	std::cout << "Overall tree height: " << bst.getTreeHeight() << "\n";
 }
+
+/*BST being "skewed" can result in WORST-case searching efficiency*/
+void demoSkewedBST_andSearch()
+{
+	std::vector<std::string> orderedStrings = { "bravo", "charlie", "delta", "echo", "foxtrot"};
+
+	BinarySearchTree bst("alpha");
+	auto pRoot = bst.getPRoot(); 
+
+	for (const std::string& currentString : orderedStrings)
+		bst.addBSTNode(currentString, pRoot);
+		
+	std::cout << "Tree height: " << bst.getTreeHeight() << "\n";
+
+	std::string valueToSearchFor = "charlie"; //near WORST case search value (WORST is not being in the tree at all)
+	std::cout << "\n\nSearching for " << valueToSearchFor << " required this many comparisons: "
+		<< bst.searchBST(valueToSearchFor) << "\n\n";
+}
+
 
 int main()
 {
 	try
 	{
-		demoPrintNodeDepth(); 
-		
+		demoBinarySearchTree(); 
+		//demoNodeDepth_andTreeHeight(); 
+		//demoSkewedBST_andSearch(); 
 	}
 
 	catch (const MyException& e)

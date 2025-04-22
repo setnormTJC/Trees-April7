@@ -59,10 +59,18 @@ public:
 	BinaryTreeNode* find_withBFS(const std::string& dataToFind) const;
 
 	/*A nice other example of recursion
-	* @param currentDepth - NOTE the pass by non-const reference = this gets incremented on recursive calls 
-	- anticipate client calling with initial value = 0 (the root's depth)
+	* @param currentDepth - anticipate client calling with initial value = 0 (the root's depth)
 	*/
-	void printNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int& currentDepth); 
+	void printNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int currentDepth);
+
+	/*Recursive*/
+	int getNodeDepth(const std::string dataToFind, BinaryTreeNode* pCurrent, int currentDepth);
+
+	/*Non-recursive, uses a queue (for funsies)
+	* @return a tree's "height" is the depth of the deepest node in the tree
+	*/
+	int getTreeHeight(); 
+
 };
 
 /*Overrides its parent's `addNode` function*/
@@ -76,6 +84,12 @@ public:
 	* NOTE: this function ASSUMES no duplicate node value is inserted!
 	@param dataToAdd -> if LESS than parent node, insert to the LEFT, else insert to the RIGHT*/
 	BinaryTreeNode* addBSTNode(const std::string& dataToAdd, BinaryTreeNode* pParent);
+
+	/*@return the number of comparisons (for algorithm analysis purposes)*/
+	int searchBST(const std::string& dataToFind);
+
+	/*Not yet implemented ... can YOU do it?*/
+	void removeNode(BinaryTreeNode* pNodeToRemove);
 };
 
 
